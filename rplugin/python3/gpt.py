@@ -1,0 +1,1 @@
+/home/francois/.config/nvim/rplugin/python/gpt.py

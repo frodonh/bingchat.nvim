@@ -1,0 +1,172 @@
+bingchat.txt	Chat with Bing AI from inside Neovim
+
+==============================================================================
+CONTENTS                                                *Bingchat*
+
+    1. Features  .......................... |BingchatFeatures|
+    2. Installation  ...................... |BingchatInstallation|
+    3. Commands  .......................... |BingchatCommands|
+    4. Functions  ......................... |BingchatFunctions|
+    5. Changelog  ......................... |BingchatChangelog|
+    6. Credits  ........................... |BingchatCredits|
+
+==============================================================================
+1. Features                                             *BingchatFeatures*
+
+BingChat plugin let you ask something to Bing AI without leaving NeoVim. The
+plugin is a remote-plugin written in Python. It adds a few new commands to
+your environment (see also |BingchatCommands|).
+
+It does not create any new keymap. You have to configure them by yourself.
+
+==============================================================================
+2. Installation                                         *BingchatInstallation*
+
+To use this plugin, you need Python3 and the EdgeGpt module. You can install
+the module with the following command:
+>
+   python3 -m pip install EdgeGPT --upgrade
+<
+The plugin needs a cookie to connect to Bing chat. You have to follow the
+instructions at https://github.com/acheong08/EdgeGPT:
+  - Open your browser and set the user-agent to something that looks like
+    Microsoft Edge
+  - Open https://bing.com/chat
+  - If you see a chat feature, you are good to continue…
+  - Install the cookie editor extension for Chrome or Firefox
+  - Go to https://bing.com
+  - Open the extension
+  - Click "Export" on the bottom right, then "Export as JSON". This saves your
+    cookies to clipboard
+  - Paste your cookies into a file bing_cookies_*.json
+  - Save the cookies file at the root of your home directory
+
+If you comply with the previous requirements and the commands are not
+available when you open NeoVim, try to run the following command:
+>
+  :UpdateRemotePlugins
+<
+then restart NeoVim.
+
+Installation with lazy.nvim~
+
+If you use lazy.nvim as your package manager, you can install BingChat.nvim
+with the following specification.
+>
+ return {
+    [...]
+    {
+	'frodonh/bingchat.nvim',
+	opts = {
+	    register = 'g',
+	    conversation_style = 'balanced'
+	}
+    }
+    [...]
+ }
+<
+==============================================================================
+3. Commands                                             *BingchatCommands*
+
+                                                        *:GptToBuf*
+:[range]GptToBuf [prompt]
+                         Ask a question to Bing chat and append answer after
+                         cursor position in the current buffer. If specified, 
+			 [prompt] is sent to Bing chat.
+			 If [range] is given, the prompt is followed by a
+			 newline and all the lines in the range. If no
+			 [range] is specified, the current line is used.
+
+:[range]GptToBuf! {prompt}
+                         Ask a question to Bing chat and append answer after
+			 cursor position in the current buffer. {prompt} is
+			 the prompt sent to Bing chat.
+			 Unlike the plain version :GptToBuf, the bang command
+			 does not append the lines in the range to the prompt.
+			 [range] is ignored.
+
+                                                        *:GptToReg*
+:[range]GptToReg [prompt]
+                         Ask a question to Bing chat and fill a register with
+                         the answer. If specified, [prompt] is sent to Bing
+			 chat.
+			 If [range] is given, the prompt is followed by a
+			 newline and all the lines in the range. If no
+			 [range] is specified, the current line is used.
+
+:[range]GptToReg! {prompt}
+                         Ask a question to Bing chat and fill a register with
+                         with the answer. If specified, [prompt] is sent to Bing
+			 chat.
+			 Unlike the plain version :GptToReg, the bang command
+			 does not append the lines in the range to the prompt.
+			 [range] is ignored.
+
+                                                        *:GptToScratch*
+:[range]GptToScratch [prompt]
+                         Ask a question to Bing chat and display the answer   
+                         in a new floating window. If specified, [prompt]
+			 is sent to Bing chat. The floating window can be
+			 closed by pressing <Esc>. The content of the
+			 floating window is deleted when it is closed.
+			 If [range] is given, the prompt is followed by a
+			 newline and all the lines in the range. If no
+			 [range] is specified, the current line is used.
+
+:[range]GptToScratch! {prompt}
+                         Ask a question to Bing chat and display the answer   
+                         in a new floating window. If specified, [prompt]
+			 is sent to Bing chat. The floating window can be
+			 closed by pressing <Esc>. The content of the
+			 floating window is deleted when it is closed.
+			 Unlike the plain version :GptToScratch, the bang
+			 command does not append the lines in the range to
+			 the prompt. [range] is ignored.
+
+                                                        *:ResetGpt*
+:ResetGpt                Start a new conversation with Bing AI. All the
+                         previous dialogue is forgotten.
+
+                                                        *:SetGptStyle*
+:SetGptStyle {style}     Set the AI conversation style. The style is used
+                         for all the following conversation. Three styles
+			 are available:
+			   - balanced: default value
+			   - precise: try to give more precise answers
+			   - creative: try to give more creative answers
+
+==============================================================================
+4. Functions                                            *BingchatFunctions*
+
+SetupGpt({options})                                     *BingchatSetup*
+                Configure some options. {options} is a dictionary. See also
+		|BingchatOptions| for configuration parameters.
+
+Options~
+                                                        *BingchatOptions*
+
+A few configuration options are provided. They may be defined at startup (with
+require 'BingChat'.setup({options}) ), or using the |SetupGpt| function.
+
+register                 A single character which identifies the register
+                         where the answer of Bing AI shall be loaded when the
+			 |:GptToReg|[!] command is used. The default value is
+			 'g'.
+
+conversation_style       A string value defining the style of Bing Ai
+                         conversation. See also |:SetGptStyle| for possible
+			 values.
+
+==============================================================================
+5. Changelog                                            *BingchatChangelog*
+
+Date: June 18, 2023
+First version
+
+==============================================================================
+6. Credits                                              *BingchatCredits*
+
+Thanks to Antonio Cheong for his reverse engineering of Bing AI and the
+development of EdgeGPT.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
