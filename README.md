@@ -41,7 +41,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 -- init.lua:
 	{
 		'frodonh/bingchat.nvim',
+		build = ':UpdateRemotePlugins',
 		opts = {
+			-- You may add options here, but the following are the default values
 	    	register = 'g',
 	    	conversation_style = 'balanced'
 		}
@@ -89,3 +91,4 @@ The following commands are available when the plugin is installed.
 
 ## Related plugins
 - [nvim-gpt](https://github.com/archibate/nvim-gpt) also let you have a conversation with Bing Chat from inside Neovim. In addition, you can also use ChatGpt and Google Search from the same interface. It is really a good plugin but was a bit too opinionated and developers-oriented for me.
+- [ChatGPT.nvim](https://github.com/jackMort/ChatGPT.nvim) is a vim-plugin for the OpenAI ChatGPT API. It provides a lot of features and a great customability, but to use it, you have to have an OpenAI token.

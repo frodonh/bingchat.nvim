@@ -57,6 +57,7 @@ with the following specification.
     [...]
     {
 	'frodonh/bingchat.nvim',
+	build = ':UpdateRemotePlugins',
 	opts = {
 	    register = 'g',
 	    conversation_style = 'balanced'
