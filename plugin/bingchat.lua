@@ -1,1 +1,1 @@
-require 'bingchat.nvim'
+require 'bingchat-nvim'

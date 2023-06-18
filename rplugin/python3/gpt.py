@@ -11,7 +11,7 @@ class Gpt(object):
         self.conversation_style = ConversationStyle.balanced
         self.bufnr = None
         self.register = 'g'
-        opts = self.vim.exec_lua("vim.g._bingchat_setup_options = require'bingchat.nvim'._setup_options")
+        opts = self.vim.exec_lua("vim.g._bingchat_setup_options = require'bingchat-nvim'._setup_options")
         opts = self.vim.eval('g:_bingchat_setup_options')
         if not isinstance(opts, dict):
             opts = dict()
